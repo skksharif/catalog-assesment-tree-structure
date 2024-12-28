@@ -225,9 +225,20 @@ header select {
   justify-content: space-around;
   align-items: center;
 }
+.good{
+  background-color: #7a4a08;
+  color: #2E5CB8;
+}
+.low{
+  background-color: #ffc0c0;
+  color: red; 
+  padding: 5px;
+  border-radius: 4px;
+}
+
 #expand {
   border: none;
-  background: transparent;  /* Default background */
+  background: transparent;
   width: fit-content;
   padding: 5px 10px;
   align-self: center;
@@ -267,15 +278,12 @@ header select {
   color: #0ba2f9;
   cursor: pointer;
 }
-.elevated {
-  border: 3px solid gold;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-  transform: scale(1.05);
-}
 .card.exact-match {
   background-color: #d4fcd4;
 }
-
+.card.grade-match {
+  background-color: #d4fcd4;
+}
 #clear-button{
   padding: 10px;
   margin: 0 20px;
@@ -283,5 +291,6 @@ header select {
   border: 1px solid rgba(0, 0, 0, 0.119);
   cursor: pointer;
 }
+
 
 

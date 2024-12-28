@@ -46,7 +46,7 @@ const TreeNode: React.FC<TreeNodeProps> = ({ node, isRoot, searchTerm }) => {
 
   return (
     <li>
-      <div >
+      <div>
         <div className={`card ${node.isExactMatch ? "exact-match" : ""}`}>
           <img src={node.image} alt={node.name} />
           <div>
@@ -61,6 +61,7 @@ const TreeNode: React.FC<TreeNodeProps> = ({ node, isRoot, searchTerm }) => {
                 <TrackChangesIcon />
                 {node.metrics.target_achievement}
               </p>
+
               <p>
                 <ScoreIcon />
                 {node.metrics.engagement_score}

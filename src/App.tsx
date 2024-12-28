@@ -3,29 +3,24 @@ import "./App.css";
 import SearchIcon from "@mui/icons-material/Search";
 import employeeData from "./data.json";
 import TreeNode, { Employee } from "./components/TreeNode.tsx";
-
+interface Data {
+  employees: Employee[];
+};
+const data: Data = {
+  employees: employeeData.employees,
+};
 interface Metrics {
   target_achievement: string;
   engagement_score: string;
   rating: number;
   feedback: string;
 }
-
-interface Data {
-  employees: Employee[];
-}
-
-const data: Data = {
-  employees: employeeData.employees,
-};
-
 const getGrade = (rating: number): string => {
   if (rating >= 4.0) return "A";
   if (rating >= 3.0) return "B";
   if (rating >= 2.0) return "C";
   return "D";
 };
-
 const searchTree = (
   node: Employee,
   searchTerm: string,
@@ -35,19 +30,13 @@ const searchTree = (
   const isNameMatch =
     !searchTerm || node.name.toLowerCase().includes(searchTerm.toLowerCase());
 
-  const isDepartmentMatch =
-    departmentFilter === "All" ||
-    node.department.toLowerCase() === departmentFilter.toLowerCase();
+  const isDepartmentMatch =departmentFilter === "All" || node.department.toLowerCase() === departmentFilter.toLowerCase();
 
-  const isGradeMatch =
-    gradeFilter === "All" || getGrade(node.metrics.rating) === gradeFilter;
+  const isGradeMatch = gradeFilter === "All" || getGrade(node.metrics.rating) === gradeFilter;
 
   const filteredReports =
     node.reports
-      ?.map((report) =>
-        searchTree(report, searchTerm, departmentFilter, gradeFilter)
-      )
-      .filter((child) => child) || [];
+      ?.map((report) =>searchTree(report, searchTerm, departmentFilter, gradeFilter)).filter((child) => child) || [];
 
   const isMatch = isNameMatch && isDepartmentMatch && isGradeMatch;
 
@@ -120,11 +109,11 @@ const App: React.FC = () => {
             value={gradeFilter}
             onChange={(e) => setGradeFilter(e.target.value)}
           >
-            <option value="All">All Grades</option>
-            <option value="A">Grade A</option>
-            <option value="B">Grade B</option>
-            <option value="C">Grade C</option>
-            <option value="D">Grade D</option>
+            <option value="All">All Grades </option>
+            <option value="A">Grade A(4-5)</option>
+            <option value="B">Grade B(3-4)</option>
+            <option value="C">Grade C(2-3)</option>
+            <option value="D">Grade D({'<'}2)</option>
           </select>
           <button onClick={clearFilters} id="clear-button">
             Clear Filters
@@ -147,6 +136,7 @@ const App: React.FC = () => {
                 node={employee}
                 isRoot={true}
                 searchTerm={searchTerm}
+                gradeFilter={gradeFilter}
               />
             ))}
           </ul>
