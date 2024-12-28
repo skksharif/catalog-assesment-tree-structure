@@ -26,11 +26,9 @@ interface Employee {
   isHighlighted?: boolean;
   isExactMatch?: boolean;
 }
-
 interface Data {
   employees: Employee[];
 }
-
 const data: Data = {
   employees: employeeData.employees,
 };
@@ -41,7 +39,6 @@ const getGrade = (rating: number): string => {
   if (rating >= 2.0) return "C";
   return "D";
 };
-
 const searchTree = (
   node: Employee,
   searchTerm: string,
@@ -53,8 +50,7 @@ const searchTree = (
 
   const isDepartmentMatch =
     departmentFilter === "All" ||
-    node.department.toLowerCase() === departmentFilter.toLowerCase() ||
-    node.department.toLowerCase() === "executive";
+    node.department.toLowerCase() === departmentFilter.toLowerCase();
 
   const isGradeMatch =
     gradeFilter === "All" || getGrade(node.metrics.rating) === gradeFilter;
@@ -68,14 +64,14 @@ const searchTree = (
 
   const isMatch = isNameMatch && isDepartmentMatch && isGradeMatch;
 
-  return isMatch || filteredReports.length > 0
+  return (isMatch || filteredReports.length > 0
     ? {
         ...node,
         isHighlighted: searchTerm ? isNameMatch : false,
         isExactMatch: searchTerm && isMatch,
         reports: filteredReports,
       }
-    : null;
+    : null);
 };
 
 interface TreeNodeProps {
@@ -101,31 +97,33 @@ const TreeNode: React.FC<TreeNodeProps> = ({ node, isRoot, searchTerm }) => {
   return (
     <li>
       <div className={`card ${node.isExactMatch ? "exact-match" : ""}`}>
-        <img src={node.image} alt={node.name} />
         <div>
-          <p>
-            <strong>{node.name}</strong>
-          </p>
-          <p className="position">
-            {node.position} - {node.department}
-          </p>
-          <div className="metrics">
+          <img src={node.image} alt={node.name} />
+          <div>
             <p>
-              <TrackChangesIcon />
-              {node.metrics.target_achievement}
+              <strong>{node.name}</strong>
             </p>
-            <p>
-              <ScoreIcon />
-              {node.metrics.engagement_score}
+            <p className="position">
+              {node.position} - {node.department}
             </p>
-            <p>
-              <CompareArrowsIcon />
-              {node.metrics.rating}
-            </p>
-            <p>
-              <StarOutlineIcon />
-              {node.metrics.feedback}
-            </p>
+            <div className="metrics">
+              <p>
+                <TrackChangesIcon />
+                {node.metrics.target_achievement}
+              </p>
+              <p>
+                <ScoreIcon />
+                {node.metrics.engagement_score}
+              </p>
+              <p>
+                <CompareArrowsIcon />
+                {node.metrics.rating}
+              </p>
+              <p>
+                <StarOutlineIcon />
+                {node.metrics.feedback}
+              </p>
+            </div>
           </div>
         </div>
         {node.reports && node.reports.length > 0 && (
@@ -164,10 +162,10 @@ const App: React.FC = () => {
   const [scale, setScale] = useState<number>(1);
 
   const filteredData = data.employees
-    .map((employee) =>
-      searchTree(employee, searchTerm, departmentFilter, gradeFilter)
-    )
-    .filter((employee) => employee);
+    .map((employee) =>{
+      return searchTree(employee, searchTerm, departmentFilter, gradeFilter);
+    }).filter((employee) => employee);
+  
 
   const zoomIn = () => {
     setScale((prevScale) => Math.min(prevScale + 0.1, 2));
@@ -207,7 +205,6 @@ const App: React.FC = () => {
               onChange={(e) => setDepartmentFilter(e.target.value)}
             >
               <option value="All">All Departments</option>
-              <option value="Executive">Executive</option>
               <option value="Marketing">Marketing</option>
               <option value="Design">Design</option>
               <option value="Sales">Sales</option>
