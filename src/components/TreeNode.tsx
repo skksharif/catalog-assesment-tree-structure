@@ -46,8 +46,8 @@ const TreeNode: React.FC<TreeNodeProps> = ({ node, isRoot, searchTerm }) => {
 
   return (
     <li>
-      <div className={`card ${node.isExactMatch ? "exact-match" : ""}`}>
-        <div>
+      <div >
+        <div className={`card ${node.isExactMatch ? "exact-match" : ""}`}>
           <img src={node.image} alt={node.name} />
           <div>
             <p>

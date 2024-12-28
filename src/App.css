@@ -236,7 +236,6 @@ header select {
   justify-content: center;
   align-items: center;
   position: relative;
-  bottom: -15px;
   margin: 0 auto;
   border-radius: 50px;
   z-index: 999;
